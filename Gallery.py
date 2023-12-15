@@ -1,5 +1,36 @@
 import streamlit as st
 import datetime
+from streamlit_lottie import st_lottie
+import json
+import numpy as numpy
+import requests
+
+###Lottie
+
+def load_lottieurl(url: str):
+    r = requests.get(url)
+    if r.status_code != 200:
+        return None
+    return r.json()
+
+Galley_Url = "https://lottie.host/0c56d477-6b00-4660-a778-d06835d77f2c/8IN1eskTjD.json"
+lottie_Gallery = load_lottieurl(Galley_Url)
+#st_lottie(lottie_Gallery,speed=2, reverse=False, loop=True, quality="medium", height=150, width=150,
+#key=None )
+Check_Url = "https://lottie.host/4cdd2732-6ed4-497d-9a95-8c311dae98f2/iVzSMcOcCx.json"
+lottie_Check = load_lottieurl(Check_Url)
+col1, col2, col3 = st.columns(3)
+
+with col1:
+    st_lottie(lottie_Gallery,speed=2, reverse=False, loop=True, quality="medium", height=150, width=150,
+    key=None )
+with col2:
+    st_lottie(Check_Url,speed=2, reverse=False, loop=True, quality="medium", height=150, width=150,
+    key=None )
+with col3:
+    st_lottie(lottie_Gallery,speed=2, reverse=False, loop=True, quality="medium", height=150, width=150,
+    key=None )
+
 st.title("TGYYMP Performance Overview") 
 st.subheader("Programme logbook")
 st.info("SMART GOALS")
@@ -21,7 +52,7 @@ def click_button():
     st.session_state.button = not st.session_state.button
     
 #st.button('Click to view schedule', on_click=click_button)
-Gallery_code = st.button('Click to view schedule', on_click=click_button)
+Gallery_code = st.button('*Click to view schedule*', on_click=click_button)
 if st.session_state.button:
     weekly_p = st.slider('Weekly Plan', 0, 25, 52)
     # The message and nested widget will remain on the page. Including Gallery
@@ -42,8 +73,6 @@ if st.session_state.button:
         st.checkbox("Female")
         st.text_input("Personal Trainer Name:")
 
-    st.write(f'You wrote {len(txt)} characters.')
-
     Overview_1 = st.expander("Overview")
     with st.expander("Overview"):
         st.write(weekly_p, 'Weeks')
@@ -57,5 +86,5 @@ if st.session_state.button:
         txt_3 
         text_contents = f" Weeks..<...>.,{GYYM_c}..<...>, ,{TGYYMP_date}...<....>,  |(Short term)|, <{txt}>, |(Medium term)|,<{txt_2}>, |(long term)|, <{txt_3}>"
 
-        st.download_button('Edit', text_contents)
+        st.download_button('File', text_contents)
 #Login
